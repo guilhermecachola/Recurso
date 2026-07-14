@@ -11,18 +11,22 @@ python -m pytest -v
 
 ## Database/test data used
 - Persistence option: SQLite
-- Seed file or test data file: `app/schema.sql` + `app/seed_data.sql`, loaded into fresh `tests/test_readiness.db` and `tests/test_rfc.db` files by the `conn` fixtures in `tests/test_readiness_database.py` and `tests/test_rfc_database.py` respectively
-- Number of records used: 22 records across 5 tables (4 users, 5 readiness questions, 2 assessments, 8 evidence rows, 3 RFC rows — the last added by the change request)
+- Seed file or test data file: `app/schema.sql` + `app/seed_data.sql`, loaded into fresh `tests/test_readiness.db` and `tests/test_rfc.db` files by the `conn` fixtures
+- Number of records used: 22 records across 5 tables (4 users, 5 readiness questions, 2 assessments, 8 evidence rows, 3 RFC rows)
 - Reset strategy before tests: each fixture deletes any pre-existing test database file, recreates it from `schema.sql` + `seed_data.sql` before every test function, and deletes it again afterward
 
 ## Result summary
 ```
-============================= test session starts ==============================
-platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0
-rootdir: <repo>
+@guilhermecachola ➜ /workspaces/Recurso/app (main) $ cd ..                    # volta a /workspaces/Recurso (a raiz do repo)
+python -m pytest -v
+============================ test session starts ============================
+platform linux -- Python 3.12.1, pytest-8.2.0, pluggy-1.6.0 -- /home/codespace/.python/current/bin/python
+cachedir: .pytest_cache
+rootdir: /workspaces/Recurso
 configfile: pytest.ini
 testpaths: tests
-collected 17 items
+plugins: anyio-4.12.1
+collected 17 items                                                          
 
 tests/test_readiness_database.py::test_at001_happy_path_complete_assessment_is_ready PASSED [  5%]
 tests/test_readiness_database.py::test_at002_negative_missing_critical_evidence_detected PASSED [ 11%]
@@ -42,8 +46,9 @@ tests/test_rfc_database.py::test_at008_role_security_officer_cannot_answer_rfc P
 tests/test_rfc_database.py::test_at008_role_contributor_can_answer_and_result_is_persisted PASSED [ 94%]
 tests/test_rfc_database.py::test_at008_answered_rfc_can_be_flagged_as_faq_candidate PASSED [100%]
 
-============================== 17 passed in 1.09s ===============================
+============================ 17 passed in 0.78s =============================
 ```
+@guilhermecachola ➜ /workspaces/Recurso (main) $ 
 
 ## Notes
 - Tests passed: 17 / 17
